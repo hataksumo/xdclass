@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <!-- 定义文件输出格式, 编码方式, 输出文件的路径 -->
+    <property name="pattern"
+              value="[%date{yyyy-MM-dd HH:mm:ss.SSS}] %X{logthreadId} %-5level %logger{80} %method %line - %msg%n"/>
+    <property name="charsetEncoding" value="UTF-8"/>
+    <property name="logPathError" value="e:/logs/xdclass/busy/error"/>
+    <property name="logPathWarning" value="e:/logs/xdclass/busy/warning"/>
+    <property name="logPathInfo" value="e:/logs/xdclass/busy/info"/>
+    <property name="APP_NAME" value="gesp-backend"/>
+
+    <!-- 彩色日志 -->
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!-- 控制台输出 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--日志级别过滤INFO以下-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>${charsetEncoding}</charset>
+        </encoder>
+    </appender>
+
+    <!-- INFO 输出到文件 -->
+    <appender name="infoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charsetEncoding}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logPathInfo}${file.separator}${APP_NAME}-INFO-%d{yyyy-MM-dd}_%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 设置日志输出级别 -->
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- WARN 输出到文件 -->
+    <appender name="warnLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charsetEncoding}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logPathWarning}${file.separator}${APP_NAME}-WARN-%d{yyyy-MM-dd}_%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 设置日志输出级别 -->
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <!-- ERROR 输出到文件 -->
+    <appender name="errorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset>${charsetEncoding}</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${logPathError}${file.separator}${APP_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>10MB</maxFileSize>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 设置日志输出级别 -->
+            <level>ERROR</level>
+        </filter>
+    </appender>
+
+    <!--配置日志输出的级别-->
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="infoLog"/>
+        <appender-ref ref="warnLog"/>
+        <appender-ref ref="errorLog"/>
+    </root>
+</configuration>

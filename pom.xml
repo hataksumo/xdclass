@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>indi.zhifa.learn</groupId>
+    <artifactId>xdclass</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+    <modules>
+        <module>busy</module>
+        <module>common</module>
+    </modules>
+
+    <properties>
+        <spring-boot.version>2.4.8</spring-boot.version>
+        <!-- 新版本bootstrap不在web里，需要单独引用-->
+        <cloud-starter-bootstrap.version>3.0.2</cloud-starter-bootstrap.version>
+        <!-- fastjson-->
+        <fastjson.version>1.2.75</fastjson.version>
+        <!-- redis client-->
+        <redis.clients.version>3.5.2</redis.clients.version>
+        <!-- lang3-->
+        <commons.lang3.version>3.9</commons.lang3.version>
+        <!-- 让Java变得甜甜的 -->
+        <hutool.version>5.6.1</hutool.version>
+        <!-- 池 -->
+        <commons-pool2.version>2.9.0</commons-pool2.version>
+        <!-- 日志切分 -->
+        <logback.version>1.2.3</logback.version>
+        <!-- dto转换 -->
+        <dozen.version>5.5.1</dozen.version>
+        <!-- 长连接的nacos-client，必须使用最新版的nacos -->
+        <nacos-client.version>2.0.0</nacos-client.version>
+        <!--mybatis plus-->
+        <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
+        <!--poi-->
+        <apache-poi.version>5.0.0</apache-poi.version>
+        <xlsx-streamer.version>2.2.0</xlsx-streamer.version>
+        <!--阿里巴巴版本-->
+        <cloud-alibaba.version>2021.1</cloud-alibaba.version>
+        <!--增强swagger-->
+        <knife4j.version>3.0.3</knife4j.version>
+        <!--对象化存储-->
+        <minio.version>8.2.2</minio.version>
+        <!--密码编解码器-->
+        <crypto.version>5.5.1</crypto.version>
+
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>indi.zhifa.learn</groupId>
+                <artifactId>xdclass-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- 新版本bootstrap不在web里，需要单独引用-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>${cloud-starter-bootstrap.version}</version>
+            </dependency>
+            <!-- 阿里巴巴统一引用-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.nacos</groupId>
+                <artifactId>nacos-client</artifactId>
+                <version>${nacos-client.version}</version>
+            </dependency>
+
+            <!--增强swagger-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+            <!--dto转换 -->
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>${dozen.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer-spring</artifactId>
+                <version>${dozen.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.craftsman</groupId>
+                <artifactId>dozer-jdk8-support</artifactId>
+                <version>1.0.6</version>
+            </dependency>
+            <!--lan3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons.lang3.version}</version>
+            </dependency>
+            <!--对象池 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commons-pool2.version}</version>
+            </dependency>
+            <!--让Java变得甜甜的 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!--fastJson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!--poi -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${apache-poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${apache-poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.monitorjbl</groupId>
+                <artifactId>xlsx-streamer</artifactId>
+                <version>${xlsx-streamer.version}</version>
+            </dependency>
+
+            <!--mybatis plus extension,包含了mybatis plus core-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- mybatis-starter：mybatis + mybatis-spring + hikari（default） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- 对象化存储 -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+
+            <!--密码编解码器-->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-crypto</artifactId>
+                <version>${crypto.version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

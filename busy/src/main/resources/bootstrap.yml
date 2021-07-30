@@ -1,0 +1,19 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: xdclass-service-busy
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      config:
+        namespace: xdclass
+        name: busy
+        file-extension: yml
+        group: LOCAL
+      discovery:
+        namespace: xdclass
+        register-enabled: true
