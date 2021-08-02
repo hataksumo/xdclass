@@ -1,7 +1,7 @@
 package indi.zhifa.learn.xdclass.busy.service.impl;
 
 import indi.zhifa.learn.xdclass.busy.dao.service.IAuthUserDaoService;
-import indi.zhifa.learn.xdclass.busy.eneity.dto.AuthUserDto;
+import indi.zhifa.learn.xdclass.busy.eneity.dto.RegisterAuthUserDto;
 import indi.zhifa.learn.xdclass.busy.eneity.po.AuthUser;
 import indi.zhifa.learn.xdclass.busy.service.IUserService;
 import indi.zhifa.learn.xdclass.common.entity.ServiceException;
@@ -23,14 +23,14 @@ public class UserServiceImpl implements IUserService {
     final IAuthUserDaoService mAuthUserDaoService;
 
     @Override
-    public AuthUser create(AuthUserDto pAuthUserDto) {
+    public AuthUser create(RegisterAuthUserDto pRegisterAuthUserDto) {
 
-        AuthUser authUser = mAuthUserDaoService.findByName(pAuthUserDto.getName());
+        AuthUser authUser = mAuthUserDaoService.findByName(pRegisterAuthUserDto.getName());
         if(null != authUser){
-            throw new ServiceException("用户名["+pAuthUserDto.getName()+"]已注册");
+            throw new ServiceException("用户名["+ pRegisterAuthUserDto.getName()+"]已注册");
         }
-        authUser = DtoEntityUtil.dtoToPo(pAuthUserDto,AuthUser.class);
-        authUser.setPasswd(passwordEncoder.encode(pAuthUserDto.getPasswd()));
+        authUser = DtoEntityUtil.dtoToPo(pRegisterAuthUserDto,AuthUser.class);
+        authUser.setPasswd(passwordEncoder.encode(pRegisterAuthUserDto.getPasswd()));
         mAuthUserDaoService.save(authUser);
         return authUser;
     }
