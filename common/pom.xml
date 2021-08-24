@@ -103,6 +103,22 @@
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
+        <!--**********************hutool:让Java甜甜的**************************-->
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <!--**********************minIo 的基础类**************************-->
+        <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
 
     </dependencies>
 

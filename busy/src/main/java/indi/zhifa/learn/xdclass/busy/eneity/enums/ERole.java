@@ -28,8 +28,8 @@ public enum ERole {
     CUSTOMER(4,"CUSTOMER");
 
     @Getter
+    @EnumValue
     int code;
     @Getter
-    @EnumValue
     String name;
 }

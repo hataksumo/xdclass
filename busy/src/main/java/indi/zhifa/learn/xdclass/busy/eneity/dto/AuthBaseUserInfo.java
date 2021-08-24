@@ -2,9 +2,14 @@ package indi.zhifa.learn.xdclass.busy.eneity.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@ApiModel("用户实体")
+@Schema(name = "用户实体")
 public class AuthBaseUserInfo {
-    @ApiModelProperty("昵称")
+    @Schema(name = "昵称")
     String nickName;
+    @Schema(name = "邮箱")
+    String email;
+    @Schema(name = "电话")
+    String phone;
 }

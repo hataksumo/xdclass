@@ -32,12 +32,12 @@ public class DtoEntityUtil {
         return result;
     }
 
-    public static <D, E> E dtoToPo(D t, E org, Class<E> clazz) {
-        if (t == null) {
+    public static <D, E> E dtoToPo(D pDto, E pPo, Class<E> pPoClass) {
+        if (pDto == null) {
             return null;
         }
-        E result = mapper.map(org, clazz);
-        copy(result,t);
+        E result = mapper.map(pPo, pPoClass);
+        copy(result,pDto);
         if(result instanceof BasePo){
             ((BasePo) result).updateInit();
         }

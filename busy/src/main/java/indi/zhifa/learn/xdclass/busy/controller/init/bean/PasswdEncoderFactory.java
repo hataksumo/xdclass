@@ -1,6 +1,8 @@
 package indi.zhifa.learn.xdclass.busy.controller.init.bean;
 
 
+import indi.zhifa.learn.xdclass.busy.appconfig.AppConfig;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
@@ -12,15 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author hatak
  */
 @Configuration
-@RefreshScope
+@AllArgsConstructor
 public class PasswdEncoderFactory {
 
-    @Value("${security.passwd.strength}")
-    int strength;
+    final AppConfig appConfig;
 
     @Bean
     PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder(strength);
+        return new BCryptPasswordEncoder(appConfig.getSecurity().getPasswd().getStrength());
     }
 
 }

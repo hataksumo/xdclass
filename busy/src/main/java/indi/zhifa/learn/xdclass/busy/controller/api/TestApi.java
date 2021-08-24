@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author hatak
  */
-@Api(value = "TestApi:测试接口")
+@Api(tags = "TestApi:测试接口")
 @RequestMapping("/api/v1.0/test")
 @AllArgsConstructor
 @RestController

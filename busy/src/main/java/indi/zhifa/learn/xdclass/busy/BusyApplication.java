@@ -13,7 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableDiscoveryClient
 @MapperScans(value = {@MapperScan("indi.zhifa.learn.xdclass.busy.dao.mapper")})
-@SpringBootApplication(scanBasePackages = {"indi.zhifa.learn.xdclass.busy"})
+@SpringBootApplication(scanBasePackages = {"indi.zhifa.learn.xdclass.busy","indi.zhifa.learn.xdclass.common"})
 public class BusyApplication {
     public static void main(String[] args) {
         DtoEntityUtil.init();

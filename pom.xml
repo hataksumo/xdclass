@@ -14,9 +14,9 @@
     </modules>
 
     <properties>
-        <spring-boot.version>2.4.8</spring-boot.version>
+        <spring-boot.version>2.4.7</spring-boot.version>
         <!-- 新版本bootstrap不在web里，需要单独引用-->
-        <cloud-starter-bootstrap.version>3.0.2</cloud-starter-bootstrap.version>
+        <cloud-starter-bootstrap.version>3.0.3</cloud-starter-bootstrap.version>
         <!-- fastjson-->
         <fastjson.version>1.2.75</fastjson.version>
         <!-- redis client-->
@@ -44,10 +44,14 @@
         <knife4j.version>3.0.3</knife4j.version>
         <!--对象化存储-->
         <minio.version>8.3.0</minio.version>
+        <web3j.version>5.0.0</web3j.version>
+        <okhttp.version>4.9.1</okhttp.version>
         <!--密码编解码器-->
         <crypto.version>5.5.1</crypto.version>
         <!-- JWT-->
         <jwt.version>3.18.1</jwt.version>
+        <!-- 验证码-->
+        <baomidou-kaptcha.version>1.1.0</baomidou-kaptcha.version>
 
 
         <maven.compiler.source>11</maven.compiler.source>
@@ -175,6 +179,17 @@
                 <version>${minio.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.web3j</groupId>
+                <artifactId>core</artifactId>
+                <version>${web3j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+            </dependency>
+
             <!--密码编解码器-->
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -187,6 +202,13 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
                 <version>${jwt.version}</version>
+            </dependency>
+
+            <!--验证码-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>kaptcha-spring-boot-starter</artifactId>
+                <version>${baomidou-kaptcha.version}</version>
             </dependency>
 
         </dependencies>

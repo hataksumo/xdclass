@@ -2,32 +2,51 @@ package indi.zhifa.learn.xdclass.busy.util;
 
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import indi.zhifa.learn.xdclass.busy.appconfig.AppConfig;
+import indi.zhifa.learn.xdclass.busy.appconfig.security.SecurityWordConfig;
 import indi.zhifa.learn.xdclass.busy.eneity.dto.TokenObject;
 import indi.zhifa.learn.xdclass.common.entity.ServiceException;
+import lombok.AllArgsConstructor;
+import org.apache.catalina.security.SecurityConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.PostConstruct;
 import javax.security.auth.message.AuthException;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalUnit;
 
 @Component
 public class TokenUtil {
 
-    @Value("${security.token.serc}")
-    String serc;
-    @Value("${security.token.duration}")
-    Long duration;
+    private final AppConfig mAppConfig;
+    private Algorithm algorithm;
+    private JWTVerifier verifier;
+    private SecurityWordConfig mSecurityConfig;
+
+    public TokenUtil(AppConfig pAppConfig){
+        mAppConfig = pAppConfig;
+    }
+
+    @PostConstruct
+    public void init(){
+        mSecurityConfig = mAppConfig.getSecurity();
+        algorithm = Algorithm.HMAC256(mSecurityConfig.getToken().getSecret());
+        verifier = JWT.require(algorithm).build();
+    }
 
     public String createToken(TokenObject pTokenObject){
-        pTokenObject.setExpire(LocalDateTime.now().minusSeconds(duration));
+        pTokenObject.setExpire(LocalDateTime.now().plusSeconds(mSecurityConfig.getToken().getDuration()));
         String token = JWT.create()
                 .withSubject(JSON.toJSONString(pTokenObject))
-                .sign(Algorithm.HMAC256(serc));
+                .sign(algorithm);
         return token;
     }
 
@@ -52,20 +71,21 @@ public class TokenUtil {
     public TokenObject parseToken(String pToken){
         try{
             DecodedJWT decodedJWT = JWT.decode(pToken);
-            String payLoad = decodedJWT.getPayload();
-
-            if(!decodedJWT.getSignature().equals(serc)){
-                throw new AuthException("签名非法");
+            try{
+                decodedJWT = verifier.verify(decodedJWT);
+            }catch (JWTVerificationException jwtVerificationException){
+                throw new ServiceException("签名不合法");
             }
-
-            TokenObject tokenObject = JSON.parseObject(payLoad,TokenObject.class);
+            String subject = decodedJWT.getSubject();
+            TokenObject tokenObject = JSON.parseObject(subject,TokenObject.class);
             LocalDateTime expire = tokenObject.getExpire();
             if(LocalDateTime.now().isAfter(expire)){
                 throw new AuthException("token过期");
             }
 
             return tokenObject;
-        }catch (Exception ex){
+        }
+        catch (Exception ex){
             throw new ServiceException("解析token时发生错误，错误信息是: "+ex.toString());
         }
 

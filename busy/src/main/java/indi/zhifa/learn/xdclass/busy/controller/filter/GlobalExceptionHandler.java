@@ -1,5 +1,6 @@
-package indi.zhifa.learn.xdclass.common.controller.filter;
+package indi.zhifa.learn.xdclass.busy.controller.filter;
 
+import com.baomidou.kaptcha.exception.*;
 import com.fasterxml.jackson.core.JsonParseException;
 import indi.zhifa.learn.xdclass.common.entity.RestResponse;
 import indi.zhifa.learn.xdclass.common.entity.ServiceException;
@@ -11,11 +12,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * 全局异常处理类
- *
- * @author wangxuyang
- */
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -50,5 +46,20 @@ public class GlobalExceptionHandler {
     public RestResponse handle(Exception e) {
         e.printStackTrace();
         return RestResponse.error(e.toString());
+    }
+
+    @ExceptionHandler(KaptchaException.class)
+    @ResponseBody
+    public RestResponse kaptchaNotFoundException(KaptchaException ex){
+        if(ex instanceof KaptchaIncorrectException){
+            return RestResponse.error("验证码输入错误");
+        }else if(ex instanceof KaptchaRenderException){
+            return RestResponse.error("验证码渲染错误 "+ex.toString());
+        }else if(ex instanceof KaptchaTimeoutException){
+            return RestResponse.error("验证码超时 ");
+        }else if(ex instanceof KaptchaNotFoundException){
+            return RestResponse.error("还没有生成验证码");
+        }
+        return RestResponse.error("发生未知验证码错误，错误信息是："+ex.toString());
     }
 }

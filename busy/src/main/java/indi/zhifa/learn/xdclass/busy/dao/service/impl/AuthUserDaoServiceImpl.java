@@ -6,10 +6,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import indi.zhifa.learn.xdclass.busy.dao.mapper.AuthUserMapper;
 import indi.zhifa.learn.xdclass.busy.dao.service.IAuthUserDaoService;
 import indi.zhifa.learn.xdclass.busy.eneity.po.AuthUser;
+import org.springframework.stereotype.Service;
 
 /**
  * @author hatak
  */
+@Service
 public class AuthUserDaoServiceImpl extends ServiceImpl<AuthUserMapper, AuthUser> implements IAuthUserDaoService {
     @Override
     public AuthUser findByName(String pName) {

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import indi.zhifa.learn.xdclass.busy.eneity.enums.ERole;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.util.List;
@@ -13,12 +14,16 @@ import java.util.List;
  * @author hatak
  */
 @Data
-@ApiModel("注册用户实体")
+@Schema(name = "注册用户实体")
 public class RegisterAuthUserDto {
-    @ApiModelProperty("用户名")
+    @Schema(name = "用户名")
     String name;
-    @ApiModelProperty("密码")
+    @Schema(name = "密码")
     String passwd;
-    @ApiModelProperty("昵称")
+    @Schema(name = "昵称")
     String nickName;
+    @Schema(name = "邮箱")
+    String email;
+    @Schema(name = "电话")
+    String phone;
 }
