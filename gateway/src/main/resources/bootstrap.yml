@@ -1,0 +1,18 @@
+server:
+  port: 7000
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        namespace: xdclass
+        register-enabled: true
+      config:
+        namespace: xdclass
+        name: gateway
+        file-extension: yml
+        group: LOCAL
